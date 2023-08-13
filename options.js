@@ -1,0 +1,52 @@
+module.exports = {
+    langOption: {
+        reply_markup: {
+            keyboard: [
+                [
+                     {text: "UZB", callback_data: 1},
+                     {text: "RUS", callback_data: 2},
+                     {text: "ENG", callback_data: 2},
+                ]
+            ],
+            resize_keyboard: true,
+        }
+    },
+    // gameOption: {
+    //     reply_markup: {
+    //         inline_keyboard: [
+    //              [
+    //                  {text: '1', callback_data: '1'},
+    //                  {text: '2', callback_data: '2'},
+    //                  {text: '3', callback_data: '3'},
+    //              ],
+    //              [
+    //                  {text: '4', callback_data: '4'},
+    //                  {text: '5', callback_data: '5'},
+    //                  {text: '6', callback_data: '6'},
+    //              ],
+    //              [
+    //                  {text: '7', callback_data: '7'},
+    //                  {text: '8', callback_data: '8'},
+    //                  {text: '9', callback_data: '9'},
+    //              ],
+    //              [
+    //                  {text: '0', callback_data: '0'}
+    //              ]
+    //         ]
+    //     }
+    // },
+     menuOption: {
+        reply_markup: {
+            keyboard: [
+                [
+                    {text: "Ko'p beriladigan savollar", value: '/question'},
+                    {text: "Bizga_xabar_yuborish", value: '/connect'},
+                ],
+                [
+                    {text: "Orqaga", callback_data: '/cancel'},
+                ]
+            ],
+            resize_keyboard: true,
+        }
+    }
+}
