@@ -1,10 +1,3 @@
-const port = process.env.PORT || 3000;
-
-bot.listen(port, () => {
-  console.log(`Bot is listening on port ${port}`);
-});
-
-
 const TelegramBot = require('node-telegram-bot-api');
 const {gameOption, menuOption, langOption} = require("./options");
 const token = '5899651544:AAHwwODulPXmNoPN9YQhBZtZ1LOLjE8pDRk'
