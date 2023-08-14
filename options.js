@@ -11,36 +11,40 @@ module.exports = {
             resize_keyboard: true,
         }
     },
-    // gameOption: {
-    //     reply_markup: {
-    //         inline_keyboard: [
-    //              [
-    //                  {text: '1', callback_data: '1'},
-    //                  {text: '2', callback_data: '2'},
-    //                  {text: '3', callback_data: '3'},
-    //              ],
-    //              [
-    //                  {text: '4', callback_data: '4'},
-    //                  {text: '5', callback_data: '5'},
-    //                  {text: '6', callback_data: '6'},
-    //              ],
-    //              [
-    //                  {text: '7', callback_data: '7'},
-    //                  {text: '8', callback_data: '8'},
-    //                  {text: '9', callback_data: '9'},
-    //              ],
-    //              [
-    //                  {text: '0', callback_data: '0'}
-    //              ]
-    //         ]
-    //     }
-    // },
+
+    msgOption: {
+        reply_markup: {
+            inline_keyboard: [
+                 [
+                     {text: 'Yana xabar yuborish', callback_data: "/reply-msg"}
+                 ]
+            ]
+        }
+    },msgOptionRu: {
+        reply_markup: {
+            inline_keyboard: [
+                 [
+                     {text: 'Отправить сообщение снова', callback_data: "/reply-msg"}
+                 ]
+            ]
+        }
+    },msgOptionEng: {
+        reply_markup: {
+            inline_keyboard: [
+                 [
+                     {text: 'Send messages again', callback_data: "/reply-msg"}
+                 ]
+            ]
+        }
+    },
+
+
      menuOption: {
         reply_markup: {
             keyboard: [
                 [
-                    {text: "Ko'p beriladigan savollar", value: '/question'},
-                    {text: "Bizga_xabar_yuborish", value: '/connect'},
+                    {text: "Ko'p_beriladigan_savollar", value: '/question'},
+                    {text: "Bizga_xabar_yuboring", value: '/connect'},
                 ],
                 [
                     {text: "Orqaga", callback_data: '/cancel'},
@@ -48,5 +52,33 @@ module.exports = {
             ],
             resize_keyboard: true,
         }
-    }
+    },
+    menuOptionRu: {
+        reply_markup: {
+            keyboard: [
+                [
+                    {text: "Часто_задаваемые_вопросы", value: '/question'},
+                    {text: "Напишите_нам", value: '/connect'},
+                ],
+                [
+                    {text: "Назад", callback_data: '/cancel'},
+                ]
+            ],
+            resize_keyboard: true,
+        }
+    },
+    menuOptionEng: {
+        reply_markup: {
+            keyboard: [
+                [
+                    {text: "Frequently_asked_questions", value: '/question'},
+                    {text: "Send_us_a_message", value: '/connect'},
+                ],
+                [
+                    {text: "Back", callback_data: '/cancel'},
+                ]
+            ],
+            resize_keyboard: true,
+        }
+    },
 }
