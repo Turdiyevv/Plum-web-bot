@@ -70,7 +70,8 @@ const bootstrap = () => {
 
 
       if(this.sender === true){
-        bot.sendMessage(chatId,text);
+          const mainChatId =  5327269353
+        bot.sendMessage(mainChatId,text);
         this.sender =false
       }
       else {
