@@ -1,8 +1,8 @@
 const TelegramBot = require('node-telegram-bot-api');
-const {gameOption, menuOption, langOption} = require("./options");
+const { menuOption, langOption} = require("./options");
 const token = '5899651544:AAHwwODulPXmNoPN9YQhBZtZ1LOLjE8pDRk'
 const bot = new TelegramBot(token, {polling: true});
-const obj = {}
+// const obj = {}
 // const startGame = async (chatId) =>{
 //   await bot.sendMessage(
 //       chatId,
