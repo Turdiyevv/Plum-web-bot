@@ -3,9 +3,9 @@ module.exports = {
         reply_markup: {
             keyboard: [
                 [
-                     {text: "UZB", callback_data: 1},
-                     {text: "RUS", callback_data: 2},
-                     {text: "ENG", callback_data: 2},
+                     {text: "Uz", callback_data: 1},
+                     {text: "Ru", callback_data: 2},
+                     {text: "En", callback_data: 2},
                 ]
             ],
             resize_keyboard: true,
@@ -43,7 +43,7 @@ module.exports = {
         reply_markup: {
             keyboard: [
                 [
-                    {text: "Ko'p_beriladigan_savollar", value: '/question'},
+                    {text: "Qo’llanmalar", value: '/question'},
                     {text: "Bizga_xabar_yuboring", value: '/connect'},
                 ],
                 [
@@ -57,7 +57,7 @@ module.exports = {
         reply_markup: {
             keyboard: [
                 [
-                    {text: "Часто_задаваемые_вопросы", value: '/question'},
+                    {text: "Подсказки", value: '/question'},
                     {text: "Напишите_нам", value: '/connect'},
                 ],
                 [
@@ -71,7 +71,7 @@ module.exports = {
         reply_markup: {
             keyboard: [
                 [
-                    {text: "Frequently_asked_questions", value: '/question'},
+                    {text: "Hints", value: '/question'},
                     {text: "Send_us_a_message", value: '/connect'},
                 ],
                 [
