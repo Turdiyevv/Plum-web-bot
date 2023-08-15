@@ -1,18 +1,10 @@
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config()
 const TOKEN = process.env.TOKEN
-const { menuOption, langOption, msgOption, menuOptionRu, menuOptionEng, msgOptionRu, msgOptionEng} = require("./options");
+const { menuOption, langOption, msgOption, menuOptionRu, menuOptionEng, msgOptionRu, msgOptionEng, hintUrl, hintUrlRu,
+    hintUrlEn
+} = require("./options");
 const bot = new TelegramBot(TOKEN, {polling: true});
-// const obj = {}
-// const startGame = async (chatId) =>{
-//   await bot.sendMessage(
-//       chatId,
-//       "Bot bir raqam o'yladi..."
-//   )
-//   const randomNumber = Math.floor(Math.random() * 10);
-//   obj[chatId] = randomNumber;
-//   await bot.sendMessage(chatId, "siz uni toping!", gameOption)
-// }
 
 
 const sendMessageTo = async (chatId) => {
@@ -21,7 +13,7 @@ const sendMessageTo = async (chatId) => {
 
         )
     }
-const sender = false;
+let sender = false;
 let lang = "";
 const bootstrap = () => {
     bot.setMyCommands([
@@ -30,15 +22,16 @@ const bootstrap = () => {
     ])
     bot.on('message', async msg => {
         // console.log(msg)
+      const chatId = msg.chat.id;
+      const username = msg.chat.username
       const text = msg.text;
       const photo = msg.photo;
       const audio = msg.audio;
-      const sticker = msg.sticker
-      const contact = msg.contact
-      const chatId = msg.chat.id;
-      const username = msg.chat.username
+      const contact = msg.contact;
+      const voice = msg.voice;
 
       if(text === '/start'){
+          this.sender = false
           // await bot.sendPhoto(
           //     chatId,
           //     "https://tlgrm.eu/_/stickers/392/525/39252584-d29b-35f5-8345-d5ea9330cf86/12.jpg",
@@ -52,7 +45,7 @@ const bootstrap = () => {
           ☺️ Hello ${msg.from.first_name}! We are glad to see you in our special bot to support our users! Choose language.`,
               langOption
           )
-  }
+      }
       //language
       if (text === "Uz"){
           this.lang = "Uz"
@@ -79,47 +72,59 @@ const bootstrap = () => {
 
         // select
       if (text === "Orqaga"){
+          this.lang = ""
+          this.sender = false;
           return bot.sendMessage(chatId, "Tilni tanlang",langOption);
       }
       if (text === "Назад"){
+          this.lang = ""
+          this.sender = false;
           return bot.sendMessage(chatId, "Выберите язык",langOption);
       }
       if (text === "Back"){
+          this.lang = ""
+          this.sender = false;
           return bot.sendMessage(chatId, "Choose a language",langOption);
       }
         // select
 
         // Hints
       if (text === "Qo’llanmalar"){
+          this.sender = false;
           return bot.sendMessage(chatId,
-              "Agar savolingizga javob topa olmagan bo'lsangiz, biz bilan bog'laning. Biz savollarga ular qabul qilingan tartibda javob beramiz."
-              )
+              "Agar savolingizga javob topa olmagan bo'lsangiz, biz bilan bog'laning. Biz savollarga ular qabul qilingan tartibda javob beramiz.",
+              hintUrl
+              );
       }
       if (text === "Подсказки"){
+          this.sender = false;
           return bot.sendMessage(chatId,
-              "Если вы не нашли там ответа на свой вопрос, то напишите нам. Мы отвечаем на вопросы в порядке поступления."
+              "Если вы не нашли там ответа на свой вопрос, то напишите нам. Мы отвечаем на вопросы в порядке поступления.",
+              hintUrlRu
               )}
       if (text === "Hints"){
+          this.sender = false;
           return bot.sendMessage(chatId,
-              "If you didn't find the answer to your question there, please contact us. We answer questions in the order in which they are received."
+              "If you didn't find the answer to your question there, please contact us. We answer questions in the order in which they are received.",
+              hintUrlEn
               )}
         // Hints
 
       // send message
-      if (text === "Bizga_xabar_yuboring") {
+      if (text === "Murojaat") {
           this.sender = true;
-          return bot.sendMessage(chatId, `Hurmatli mijoz, muammoingizni tez hal etish uchun Plumdagi akkaunt raqamingizni yozishingizni so'raymiz. 
-                Iltimos, xabarni bitta matnda yo'llashga harakat qiling. ${this.sender ? `💌` : `🛑` }`, menuOption);
+          return bot.sendMessage(chatId, `🔹 Hurmatli mijoz, muammoingizni tez hal etish uchun Plumdagi akkaunt raqamingizni yozishingizni so'raymiz. 
+           🔹 Iltimos, xabarni bitta matnda yo'llashga harakat qiling. ${this.sender ? `💌` : `🛑` }`, menuOption);
       }
-      if (text === "Напишите_нам") {
+      if (text === "Обращение") {
           this.sender = true;
-          return bot.sendMessage(chatId, `Уважаемый клиент для быстрого решение вашей проблемы просим Вас написать номер Вашего аккаунта от Plum.
-                Пожалуйста, попробуйте отправить сообщение одним текстом. ${this.sender ? `💌` : `🛑` }`, menuOptionRu);
+          return bot.sendMessage(chatId, `🔹 Уважаемый клиент для быстрого решение вашей проблемы просим Вас написать номер Вашего аккаунта от Plum.
+           🔹 Пожалуйста, попробуйте отправить сообщение одним текстом. ${this.sender ? `💌` : `🛑` }`, menuOptionRu);
       }
-      if (text === "Send_us_a_message") {
+      if (text === "Appeal") {
           this.sender = true;
-          return bot.sendMessage(chatId, `Dear user, for a quick solution to your problem, please write your account number from Plum application.
-                Please try to send the message in one text. ${this.sender ? `💌` : `🛑` }`, menuOptionEng);
+          return bot.sendMessage(chatId, `🔹 Dear user, for a quick solution to your problem, please write your account number from Plum application.
+           🔹 Please try to send the message in one text. ${this.sender ? `💌` : `🛑` }`, menuOptionEng);
       }
       // send message
 
@@ -127,51 +132,141 @@ const bootstrap = () => {
       if(this.sender === true){
           const mainChatId =  5327269353
           if (text){
-            await bot.sendMessage(mainChatId,`❗️ Sizga @${username} tomonidan yangi xabar mavjud : ${text}`);
+              try {
+                  await bot.sendMessage(mainChatId,`❗️From @${username} new message: 
+                   ${text}`
+                  );
+                  if (this.lang === "Uz"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                  }
+                  if (this.lang === "Ru"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+                  }
+                  if (this.lang === "En"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+                  }
+
+              }catch (error){
+                  this.sender = false;
+                    return bot.sendMessage(chatId,`🛑`);
+              }
           }
+
           if (photo){
-            await bot.sendPhoto(mainChatId, photo[0].file_id, {
-                caption: `❗️ Sizga @${username} tomonidan yangi xabar mavjud: *${msg.caption}*`,
-                parse_mode: 'Markdown'
-            });
+              try{
+                await bot.sendPhoto(mainChatId, photo[0].file_id, {
+                    caption: `❗️From @${username} new message:
+                     *${msg.caption}*`,
+                    parse_mode: 'Markdown'
+                });
+                if (this.lang === "Uz"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                  }
+                  if (this.lang === "Ru"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+                  }
+                  if (this.lang === "En"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+                  }
+              }catch (error){
+                  return bot.sendMessage(chatId,"🛑")
+              }
           }
+
           if (contact) {
-            await bot.sendContact(mainChatId, contact.phone_number, contact.first_name);
+              try {
+                await bot.sendContact(mainChatId, contact.phone_number, contact.first_name,
+                    {
+                        caption:`From @${username} new message:`
+                    }
+                );
+                  if (this.lang === "Uz"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                  }
+                  if (this.lang === "Ru"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+                  }
+                  if (this.lang === "En"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+                  }
+              }catch (error){
+                  return bot.sendMessage(chatId,`🛑 ${error}`)
+              }
           }
+
           if (audio) {
-            await bot.sendSticker(mainChatId, audio);
-          }
+              try {
+                  const audioFile = audio.file_id;
+                  await bot.sendAudio(mainChatId, audioFile,{
+                       caption: `️From @${username} new message:`
+                  });
+                  if (this.lang === "Uz"){
+                    this.sender = false;
+                    await bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                  }
+                  if (this.lang === "Ru"){
+                    this.sender = false;
+                    await bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+                  }
+                  if (this.lang === "En"){
+                    this.sender = false;
+                    await bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+                  }
 
-          //done
-          if (this.lang === "Uz"){
-            await bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-            this.sender = false;
+              }catch (error){
+                  console.log(error)
+                  return bot.sendMessage(chatId,`🛑 ${error}`);
+              }
           }
-          if (this.lang === "Ru"){
-            await bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
-            this.sender = false;
+          if (voice) {
+              try{
+                  await bot.sendAudio(mainChatId, voice.file_id, {
+                      caption: `️From @${username} new message:`
+                    });
+                  if (this.lang === "Uz"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                  }
+                  if (this.lang === "Ru"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+                  }
+                  if (this.lang === "En"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+                  }
+              }catch (error){
+                  return bot.sendMessage(chatId, `🛑 ${error}`)
+              }
           }
-          if (this.lang === "En"){
-            await bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
-            this.sender = false;
-          }
-          //done
       }
-
-
       else {
           if (this.lang === "Uz"){
-            bot.sendMessage(chatId," ⚠️ Uzr, siz to'g'ridan to'g'ri xabar yozaolmaysiz !")
+            return bot.sendMessage(chatId," ⚠️ Uzr, siz to'g'ridan to'g'ri xabar yozaolmaysiz !")
           }
           if (this.lang === "Ru"){
-            bot.sendMessage(chatId," ⚠️ Извините, вы не можете написать прямое сообщение !")
+            return bot.sendMessage(chatId," ⚠️ Извините, вы не можете написать прямое сообщение !")
           }
           if (this.lang === "En"){
-            bot.sendMessage(chatId," ⚠️ Sorry, you can't write a message directly !")
+            return bot.sendMessage(chatId," ⚠️ Sorry, you can't write a message directly !")
+          }
+          else { return bot.sendMessage(chatId,
+            `⚠️ Uzr, siz to'g'ridan to'g'ri xabar yozaolmaysiz !
+⚠️ Извините, вы не можете написать прямое сообщение !
+⚠️ Sorry, you can't write a message directly !`
+        )
           }
       }
     });
-
 
     bot.on( 'callback_query', async (query)=> {
         const callbackData = query.data;
@@ -180,22 +275,19 @@ const bootstrap = () => {
           this.sender = true;
           if (this.lang === "Uz"){
             return bot.sendMessage(chatId,
-                `Hurmatli mijoz, muammoingizni tez hal etish uchun Plumdagi akkaunt raqamingizni yozishingizni so'raymiz. 
-                Iltimos, xabarni bitta matnda yo'llashga harakat qiling. ${this.sender ? `💌` : `🛑` }`,
+                `🔹 Iltimos, xabarni bitta matnda yo'llashga harakat qiling. ${this.sender ? `💌` : `🛑` }`,
                 menuOption
             );
           }
           if (this.lang === "Ru"){
             return bot.sendMessage(chatId,
-                `Уважаемый клиент для быстрого решение вашей проблемы просим Вас написать номер Вашего аккаунта от Plum.
-                Пожалуйста, попробуйте отправить сообщение одним текстом. ${this.sender ? `💌` : `🛑` }`,
+                `🔹 Пожалуйста, попробуйте отправить сообщение одним текстом. ${this.sender ? `💌` : `🛑` }`,
                 menuOptionRu
             );
           }
           if (this.lang === "En"){
             return bot.sendMessage(chatId,
-                `Dear user, for a quick solution to your problem, please write your account number from Plum application.
-                Please try to send the message in one text. ${this.sender ? `💌` : `🛑` }`,
+                `🔹 Please try to send the message in one text. ${this.sender ? `💌` : `🛑` }`,
                 menuOptionEng
             );
           }

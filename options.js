@@ -44,7 +44,7 @@ module.exports = {
             keyboard: [
                 [
                     {text: "Qo’llanmalar", value: '/question'},
-                    {text: "Bizga_xabar_yuboring", value: '/connect'},
+                    {text: "Murojaat", value: '/connect'},
                 ],
                 [
                     {text: "Orqaga", callback_data: '/cancel'},
@@ -58,7 +58,7 @@ module.exports = {
             keyboard: [
                 [
                     {text: "Подсказки", value: '/question'},
-                    {text: "Напишите_нам", value: '/connect'},
+                    {text: "Обращение", value: '/connect'},
                 ],
                 [
                     {text: "Назад", callback_data: '/cancel'},
@@ -72,7 +72,7 @@ module.exports = {
             keyboard: [
                 [
                     {text: "Hints", value: '/question'},
-                    {text: "Send_us_a_message", value: '/connect'},
+                    {text: "Appeal", value: '/connect'},
                 ],
                 [
                     {text: "Back", callback_data: '/cancel'},
@@ -81,4 +81,32 @@ module.exports = {
             resize_keyboard: true,
         }
     },
+
+    hintUrl: {
+        reply_markup:{
+            inline_keyboard: [
+                [
+                    {text: "Qo'llanmaga o'tish", url: "https://plum.uz/faq"}
+                ]
+            ]
+        }
+    },
+    hintUrlRu: {
+        reply_markup:{
+            inline_keyboard: [
+                [
+                    {text: "Перейти к подсказки", url: "https://plum.uz/faq"}
+                ]
+            ]
+        }
+    },
+    hintUrlEn: {
+        reply_markup:{
+            inline_keyboard: [
+                [
+                    {text: "Go to hints", url: "https://plum.uz/faq"}
+                ]
+            ]
+        }
+    }
 }
