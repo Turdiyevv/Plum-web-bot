@@ -20,7 +20,8 @@ module.exports = {
                  ]
             ]
         }
-    },msgOptionRu: {
+    },
+    msgOptionRu: {
         reply_markup: {
             inline_keyboard: [
                  [
@@ -28,7 +29,8 @@ module.exports = {
                  ]
             ]
         }
-    },msgOptionEng: {
+    },
+    msgOptionEng: {
         reply_markup: {
             inline_keyboard: [
                  [
@@ -38,8 +40,7 @@ module.exports = {
         }
     },
 
-
-     menuOption: {
+    menuOption: {
         reply_markup: {
             keyboard: [
                 [

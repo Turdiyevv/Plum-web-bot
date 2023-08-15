@@ -1,8 +1,12 @@
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config()
 const TOKEN = process.env.TOKEN
-const { menuOption, langOption, msgOption, menuOptionRu, menuOptionEng, msgOptionRu, msgOptionEng, hintUrl, hintUrlRu,
-    hintUrlEn
+const {
+    menuOption, langOption,
+    msgOption, menuOptionRu,
+    menuOptionEng, msgOptionRu,
+    msgOptionEng, hintUrl,
+    hintUrlRu, hintUrlEn
 } = require("./options");
 const bot = new TelegramBot(TOKEN, {polling: true});
 
@@ -17,8 +21,8 @@ let sender = false;
 let lang = "";
 const bootstrap = () => {
     bot.setMyCommands([
-        {command: "/start", description: 'Boshlang\' ich kirish qismi'},
-        {command: "/info", description: 'Batafsil ma\'lumot'},
+        {command: "/start", description: 'Start chat'},
+        {command: "/admin", description: 'Only administrator'},
     ])
     bot.on('message', async msg => {
         // console.log(msg)
@@ -249,6 +253,11 @@ const bootstrap = () => {
               }
           }
       }
+
+      if (text === "/admin"){
+        // console.log("ishlayaptimi");
+      }
+
       else {
           if (this.lang === "Uz"){
             return bot.sendMessage(chatId," ⚠️ Uzr, siz to'g'ridan to'g'ri xabar yozaolmaysiz !")
@@ -267,6 +276,7 @@ const bootstrap = () => {
           }
       }
     });
+
 
     bot.on( 'callback_query', async (query)=> {
         const callbackData = query.data;
