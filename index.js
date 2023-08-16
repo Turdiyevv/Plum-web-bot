@@ -40,10 +40,6 @@ const bootstrap = () => {
 
       if(text === '/start'){
           this.sender = false
-          // await bot.sendPhoto(
-          //     chatId,
-          //     "https://tlgrm.eu/_/stickers/392/525/39252584-d29b-35f5-8345-d5ea9330cf86/12.jpg",
-          //     )
           return  bot.sendMessage(
               chatId,
           `☺️ Assalomu alaykum hurmatli ${msg.from.first_name} sizni foydalanuvchilarimizni qo’llab quvvatlash botimizda ko'rib turganimizdan xursandmiz! Maqbul tilni tanlang.
@@ -159,12 +155,13 @@ const bootstrap = () => {
 
               }catch (error){
                   this.sender = false;
-                    return bot.sendMessage(chatId,`🛑`);
+                    return bot.sendMessage(chatId,`🛑 ${error}`);
               }
           }
 
           if (photo){
               try{
+                  console.log(photo[0].file_id)
                 await bot.sendPhoto(mainChatId, photo[0].file_id, {
                     caption: `❗️From @${username} new message:
                      *${msg.caption}*`,
@@ -183,7 +180,7 @@ const bootstrap = () => {
                     return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
                   }
               }catch (error){
-                  return bot.sendMessage(chatId,"🛑")
+                  return bot.sendMessage(chatId,`🛑${error}`)
               }
           }
 
@@ -210,28 +207,25 @@ const bootstrap = () => {
                   return bot.sendMessage(chatId,`🛑 ${error}`)
               }
           }
-
           if (audio) {
               try {
-                  const audioFile = audio.file_id;
-                  await bot.sendAudio(mainChatId, audioFile,{
+                  await bot.sendAudio(mainChatId, audio.file_id,{
                        caption: `️From @${username} new message:`
                   });
                   if (this.lang === "Uz"){
                     this.sender = false;
-                    await bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
                   }
                   if (this.lang === "Ru"){
                     this.sender = false;
-                    await bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
                   }
                   if (this.lang === "En"){
                     this.sender = false;
-                    await bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
                   }
 
               }catch (error){
-                  console.log(error)
                   return bot.sendMessage(chatId,`🛑 ${error}`);
               }
           }
