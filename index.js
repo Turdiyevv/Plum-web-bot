@@ -1,3 +1,4 @@
+
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config()
 const TOKEN = process.env.TOKEN
@@ -6,9 +7,12 @@ const {
     msgOption, menuOptionRu,
     menuOptionEng, msgOptionRu,
     msgOptionEng, hintUrl,
-    hintUrlRu, hintUrlEn
+    hintUrlRu, hintUrlEn,
+    adminLang, adminFunctionUz
 } = require("./options");
 const bot = new TelegramBot(TOKEN, {polling: true});
+
+//axios
 
 
 const sendMessageTo = async (chatId) => {
@@ -254,9 +258,21 @@ const bootstrap = () => {
           }
       }
 
+      //admin
       if (text === "/admin"){
-        // console.log("ishlayaptimi");
+          if (chatId === 5327269353){
+          const replyMarkup = { remove_keyboard: true };
+            return bot.sendMessage(chatId, "Tilni tanlang", adminLang)
+          }else {
+            return bot.sendMessage(
+                chatId,
+                "⚠️ Bu buyruq faqat admin uchun mavjud" +
+                "    " +
+                "⚠️Этo команда доступнo только для администратора",
+                langOption)
+          }
       }
+      //admin
 
       else {
           if (this.lang === "Uz"){
@@ -301,6 +317,15 @@ const bootstrap = () => {
                 menuOptionEng
             );
           }
+        }
+    });
+    bot.on('callback_query', async (query) => {
+        const callbackData = query.data;
+        const chatId = query.message.chat.id;
+        if (callbackData === "/uzb"){
+           await bot.sendMessage(chatId,"Kerakli bandni tanlang",adminFunctionUz)
+        }
+        if (callbackData === "/members"){
         }
     })
 }

@@ -109,5 +109,29 @@ module.exports = {
                 ]
             ]
         }
+    },
+
+    adminLang:{
+        reply_markup:{
+            inline_keyboard:[
+                [
+                    {text: "O'zbekcha", callback_data: "/uzb"},
+                    {text: "Ruscha", callback_data: "/rus"}
+                ]
+            ]
+        }
+    },
+
+    adminFunctionUz:{
+        reply_markup:{
+            inline_keyboard:[
+                [
+                    {text: "Userlar", callback_data: "/members"}
+                ],
+                [
+                    {text: "Umumiy xabar jo'natish", callback_data: "/send-m-users"}
+                ]
+            ]
+        }
     }
 }
