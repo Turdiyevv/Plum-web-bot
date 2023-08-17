@@ -1,3 +1,9 @@
+const hintsData = require('./alltexts');
+const hintsReplyData = require('./alltexts');
+const appealReply = require('./alltexts')
+const helloTexts= require('./alltexts')
+const stopWrite = require('./alltexts')
+const notAdmins = require('./alltexts')
 
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config()
@@ -11,7 +17,7 @@ const {
     adminLang, adminFunctionUz
 } = require("./options");
 const bot = new TelegramBot(TOKEN, {polling: true});
-
+module.exports = {bot}
 //axios
 
 
@@ -29,7 +35,8 @@ const bootstrap = () => {
         {command: "/admin", description: 'Only administrator'},
     ])
     bot.on('message', async msg => {
-        // console.log(msg)
+      const firstName = msg.from.first_name;
+        // console.log(firstName)
       const chatId = msg.chat.id;
       const username = msg.chat.username
       const text = msg.text;
@@ -37,38 +44,34 @@ const bootstrap = () => {
       const audio = msg.audio;
       const contact = msg.contact;
       const voice = msg.voice;
+      const video = msg.video
 
       if(text === '/start'){
           this.sender = false
-          return  bot.sendMessage(
-              chatId,
-          `☺️ Assalomu alaykum hurmatli ${msg.from.first_name} sizni foydalanuvchilarimizni qo’llab quvvatlash botimizda ko'rib turganimizdan xursandmiz! Maqbul tilni tanlang.
-              
-          ☺️ Здравствуйте, ${msg.from.first_name}! Мы рады видеть вас в нашем специальном боте для поддержки наших пользователей! Выберите подходящий язык.
-              
-          ☺️ Hello ${msg.from.first_name}! We are glad to see you in our special bot to support our users! Choose language.`,
-              langOption
+          return  bot.sendMessage(chatId, `☺️ Assalomu alaykum hurmatli ${firstName},${helloTexts.helloText.uzAllHello}
+☺️ Здравствуйте, ${firstName} ${helloTexts.helloText.ruAllHello}!
+☺️ Hello ${firstName}! ${helloTexts.helloText.enAllHello}`, langOption
           )
       }
       //language
       if (text === "Uz"){
           this.lang = "Uz"
           const replyMarkup = { remove_keyboard: true };
-        return bot.sendMessage(chatId, "Bizda eng ko'p beriladigan savollarga tayyor javoblar bor, siz “Qo’llanmalar” havolasini bosish orqali o'qishingiz mumkin",
+        return bot.sendMessage(chatId, `${hintsData.Hints.uzHints}`,
             menuOption
         )
       }
       if (text === "Ru"){
           this.lang = "Ru"
           const replyMarkup = { remove_keyboard: true };
-        return bot.sendMessage(chatId, "Мы ответили на наиболее часто задаваемые вопросы, с которыми вы можете ознакомиться, перейдя по ссылке на “Подсказки”.",
+        return bot.sendMessage(chatId, `${hintsData.Hints.ruHints}`,
             menuOptionRu
         )
       }
       if (text === "En"){
           this.lang = "En"
           const replyMarkup = { remove_keyboard: true };
-        return bot.sendMessage(chatId, "We have answered the most frequently asked questions, which you can read by clicking on the link to Hints",
+        return bot.sendMessage(chatId, `${hintsData.Hints.enHints}`,
             menuOptionEng
         )
       }
@@ -96,20 +99,20 @@ const bootstrap = () => {
       if (text === "Qo’llanmalar"){
           this.sender = false;
           return bot.sendMessage(chatId,
-              "Agar savolingizga javob topa olmagan bo'lsangiz, biz bilan bog'laning. Biz savollarga ular qabul qilingan tartibda javob beramiz.",
+              `${hintsReplyData.replyHints.uzReply}`,
               hintUrl
               );
       }
       if (text === "Подсказки"){
           this.sender = false;
           return bot.sendMessage(chatId,
-              "Если вы не нашли там ответа на свой вопрос, то напишите нам. Мы отвечаем на вопросы в порядке поступления.",
+              `${hintsReplyData.replyHints.ruReply}`,
               hintUrlRu
               )}
       if (text === "Hints"){
           this.sender = false;
           return bot.sendMessage(chatId,
-              "If you didn't find the answer to your question there, please contact us. We answer questions in the order in which they are received.",
+              `${hintsReplyData.replyHints.enReply}`,
               hintUrlEn
               )}
         // Hints
@@ -117,18 +120,21 @@ const bootstrap = () => {
       // send message
       if (text === "Murojaat") {
           this.sender = true;
-          return bot.sendMessage(chatId, `🔹 Hurmatli mijoz, muammoingizni tez hal etish uchun Plumdagi akkaunt raqamingizni yozishingizni so'raymiz. 
-           🔹 Iltimos, xabarni bitta matnda yo'llashga harakat qiling. ${this.sender ? `💌` : `🛑` }`, menuOption);
+          return bot.sendMessage(chatId,
+              `${appealReply.replyAppeal.uzAppeal} ${this.sender ? `💌` : `🛑` }`,
+              menuOption);
       }
       if (text === "Обращение") {
           this.sender = true;
-          return bot.sendMessage(chatId, `🔹 Уважаемый клиент для быстрого решение вашей проблемы просим Вас написать номер Вашего аккаунта от Plum.
-           🔹 Пожалуйста, попробуйте отправить сообщение одним текстом. ${this.sender ? `💌` : `🛑` }`, menuOptionRu);
+          return bot.sendMessage(chatId,
+              `${appealReply.replyAppeal.ruAppeal} ${this.sender ? `💌` : `🛑` }`,
+              menuOptionRu);
       }
       if (text === "Appeal") {
           this.sender = true;
-          return bot.sendMessage(chatId, `🔹 Dear user, for a quick solution to your problem, please write your account number from Plum application.
-           🔹 Please try to send the message in one text. ${this.sender ? `💌` : `🛑` }`, menuOptionEng);
+          return bot.sendMessage(chatId,
+              `${appealReply.replyAppeal.enAppeal} ${this.sender ? `💌` : `🛑` }`,
+              menuOptionEng);
       }
       // send message
 
@@ -158,14 +164,11 @@ const bootstrap = () => {
                     return bot.sendMessage(chatId,`🛑 ${error}`);
               }
           }
-
           if (photo){
               try{
-                  console.log(photo[0].file_id)
                 await bot.sendPhoto(mainChatId, photo[0].file_id, {
-                    caption: `❗️From @${username} new message:
-                     *${msg.caption}*`,
-                    parse_mode: 'Markdown'
+                    caption: `❗️From @${username} new message:<b>${msg.caption}</b>`,
+                    parse_mode: `HTML`
                 });
                 if (this.lang === "Uz"){
                     this.sender = false;
@@ -183,7 +186,6 @@ const bootstrap = () => {
                   return bot.sendMessage(chatId,`🛑${error}`)
               }
           }
-
           if (contact) {
               try {
                 await bot.sendContact(mainChatId, contact.phone_number, contact.first_name,
@@ -250,41 +252,62 @@ const bootstrap = () => {
                   return bot.sendMessage(chatId, `🛑 ${error}`)
               }
           }
+          if (video){
+              try{
+                  await bot.sendVideo(mainChatId, video.file_id, {
+                      caption: `️From @${username} new message: ${msg.caption}`,
+                      parse_mode: "HTML"
+                    });
+                  if (this.lang === "Uz"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                  }
+                  if (this.lang === "Ru"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+                  }
+                  if (this.lang === "En"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+                  }
+              }catch (error){
+                  return bot.sendMessage(chatId, `🛑 ${error}`)
+              }
+          }
       }
 
       //admin
       if (text === "/admin"){
           if (chatId === 5327269353){
-          const replyMarkup = { remove_keyboard: true };
-            return bot.sendMessage(chatId, "Tilni tanlang", adminLang)
-          }else {
-            return bot.sendMessage(
-                chatId,
-                "⚠️ Bu buyruq faqat admin uchun mavjud" +
-                "    " +
-                "⚠️Этo команда доступнo только для администратора",
-                langOption)
-          }
+              const replyMarkup = { remove_keyboard: true };
+              this.lang === "";
+                return bot.sendMessage(chatId, "Tilni tanlang  |  Выберите язык", adminLang)
+              }else {
+                 return bot.sendMessage(chatId,
+                    `${notAdmins.notAdmin.text}`,langOption)
+              }
       }
       //admin
 
       else {
-          if (this.lang === "Uz"){
-            return bot.sendMessage(chatId," ⚠️ Uzr, siz to'g'ridan to'g'ri xabar yozaolmaysiz !")
-          }
-          if (this.lang === "Ru"){
-            return bot.sendMessage(chatId," ⚠️ Извините, вы не можете написать прямое сообщение !")
-          }
-          if (this.lang === "En"){
-            return bot.sendMessage(chatId," ⚠️ Sorry, you can't write a message directly !")
-          }
-          else { return bot.sendMessage(chatId,
-            `⚠️ Uzr, siz to'g'ridan to'g'ri xabar yozaolmaysiz !
-⚠️ Извините, вы не можете написать прямое сообщение !
-⚠️ Sorry, you can't write a message directly !`
-        )
-          }
+              if (this.lang === "Uz"){
+                return bot.sendMessage(chatId,`${stopWrite.notWrite.uzNotWrite}`)
+              }
+              if (this.lang === "Ru"){
+                return bot.sendMessage(chatId,`${stopWrite.notWrite.ruNotWrite}`)
+              }
+              if (this.lang === "En"){
+                return bot.sendMessage(chatId,`${stopWrite.notWrite.enNotWrite}`)
+              }else {
+                  return bot.sendMessage(chatId,
+                `${stopWrite.notWrite.uzNotWrite}
+    ${stopWrite.notWrite.ruNotWrite}
+    ${stopWrite.notWrite.enNotWrite}`
+            )
+
+              }
       }
+
     });
 
 
@@ -320,6 +343,7 @@ const bootstrap = () => {
            await bot.sendMessage(chatId,"Kerakli bandni tanlang",adminFunctionUz)
         }
         if (callbackData === "/members"){
+            console.log("users view")
         }
     })
 }
