@@ -1,9 +1,9 @@
-const hintsData = require('./alltexts');
-const hintsReplyData = require('./alltexts');
-const appealReply = require('./alltexts')
-const helloTexts= require('./alltexts')
-const stopWrite = require('./alltexts')
-const notAdmins = require('./alltexts')
+const hintsData = require('./texts/alltexts');
+const hintsReplyData = require('./texts/alltexts');
+const appealReply = require('./texts/alltexts')
+const helloTexts= require('./texts/alltexts')
+const stopWrite = require('./texts/alltexts')
+const notAdmins = require('./texts/alltexts')
 
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config()
@@ -15,7 +15,7 @@ const {
     msgOptionEng, hintUrl,
     hintUrlRu, hintUrlEn,
     adminLang, adminFunctionUz
-} = require("./options");
+} = require("./options/options");
 const bot = new TelegramBot(TOKEN, {polling: true});
 module.exports = {bot}
 //axios

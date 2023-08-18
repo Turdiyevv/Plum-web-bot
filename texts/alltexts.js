@@ -24,6 +24,8 @@ const notWrite = {
     ruNotWrite: "⚠️ Извините, вы не можете написать прямое сообщение !",
     enNotWrite: "⚠️ Sorry, you can't write a message directly !",
 }
+
+
 const notAdmin = {
     text: "⚠️ Bu buyruq faqat admin uchun mavjud!" +
         " ⚠️Этo команда доступнo только для администратора!"
