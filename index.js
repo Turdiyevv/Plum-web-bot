@@ -4,29 +4,45 @@ const appealReply = require('./texts/alltexts')
 const helloTexts= require('./texts/alltexts')
 const stopWrite = require('./texts/alltexts')
 const notAdmins = require('./texts/alltexts')
+const {
+        menuOption, langOption,
+        msgOption, menuOptionRu,
+        menuOptionEng, msgOptionRu,
+        msgOptionEng, adminLang,
+        adminFunctionUz, adminFunctionRu
+} = require("./options/options");
+const {
+    hintsOption,
+    hintsOptionEn,
+    hintsOptionRu} = require("./options/optionHint")
+const querystring = require("querystring");
+const {virtualCard} = require("./texts/hint");
 
+const express = require('express');
+const mongoose = require('mongoose');
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config()
+
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+mongoose.connect('mongodb://localhost:27017/botdb', { useNewUrlParser: true, useUnifiedTopology: true });
+const userSchema = new mongoose.Schema({
+  chatId: { type: Number, required: true },
+  firstName: String,
+  username: String,
+  phoneNumber: String,
+});
+
+const User = mongoose.model('User', userSchema);
+
+
 const TOKEN = process.env.TOKEN
-const {
-    menuOption, langOption,
-    msgOption, menuOptionRu,
-    menuOptionEng, msgOptionRu,
-    msgOptionEng, hintUrl,
-    hintUrlRu, hintUrlEn,
-    adminLang, adminFunctionUz
-} = require("./options/options");
 const bot = new TelegramBot(TOKEN, {polling: true});
 module.exports = {bot}
-//axios
 
 
-const sendMessageTo = async (chatId) => {
-    await bot.sendMessage(chatId,
-        "Platforma haqida qisqacha malumot",
 
-        )
-    }
 let sender = false;
 let lang = "";
 const bootstrap = () => {
@@ -36,7 +52,6 @@ const bootstrap = () => {
     ])
     bot.on('message', async msg => {
       const firstName = msg.from.first_name;
-        // console.log(firstName)
       const chatId = msg.chat.id;
       const username = msg.chat.username
       const text = msg.text;
@@ -44,8 +59,10 @@ const bootstrap = () => {
       const audio = msg.audio;
       const contact = msg.contact;
       const voice = msg.voice;
-      const video = msg.video
+      const video = msg.video;
+      const document = msg.document;
 
+        let userInfo = [];
       if(text === '/start'){
           this.sender = false
           return  bot.sendMessage(chatId, `☺️ Assalomu alaykum hurmatli ${firstName},${helloTexts.helloText.uzAllHello}
@@ -100,20 +117,20 @@ const bootstrap = () => {
           this.sender = false;
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.uzReply}`,
-              hintUrl
+              hintsOption
               );
       }
       if (text === "Подсказки"){
           this.sender = false;
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.ruReply}`,
-              hintUrlRu
+              hintsOptionRu
               )}
       if (text === "Hints"){
           this.sender = false;
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.enReply}`,
-              hintUrlEn
+              hintsOptionEn
               )}
         // Hints
 
@@ -148,6 +165,8 @@ const bootstrap = () => {
                   );
                   if (this.lang === "Uz"){
                     this.sender = false;
+                    this.userInfo = [this.lang, msg.chat, msg.text, msg.document]
+                      console.log(this.userInfo)
                     return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
                   }
                   if (this.lang === "Ru"){
@@ -274,6 +293,28 @@ const bootstrap = () => {
                   return bot.sendMessage(chatId, `🛑 ${error}`)
               }
           }
+          if(document){
+              try {
+                  await bot.sendDocument(mainChatId, document.file_id, {
+                      caption: `From @${username} new message: ${msg.caption}`,
+                      parse_mode: "HTML"
+                  });
+                  if (this.lang === "Uz"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                  }
+                  if (this.lang === "Ru"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+                  }
+                  if (this.lang === "En"){
+                    this.sender = false;
+                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+                  }
+              }catch (err){
+                  return bot.sendMessage(chatId, `🛑 ${err}`)
+              }
+          }
       }
 
       //admin
@@ -339,11 +380,40 @@ const bootstrap = () => {
     bot.on('callback_query', async (query) => {
         const callbackData = query.data;
         const chatId = query.message.chat.id;
+        if (callbackData === '/1') {
+            if (this.lang === "Uz"){
+                return bot.sendMessage(chatId,`${virtualCard.uzCard}`)
+            }
+            if (this.lang === "Ru"){
+                return bot.sendMessage(chatId,`${virtualCard.ruCard}`)
+            }
+            if (this.lang === "En"){
+                return bot.sendMessage(chatId,`${virtualCard.enCard}`)
+            }
+        }
+    })
+
+
+    bot.on('callback_query', async (query) => {
+        const callbackData = query.data;
+        const chatId = query.message.chat.id;
+        const language = ""
         if (callbackData === "/uzb"){
+            this.language = 'uzb'
+            // bot.deleteMessage(chatId)
            await bot.sendMessage(chatId,"Kerakli bandni tanlang",adminFunctionUz)
         }
+        if (callbackData === "/rus"){
+            this.language = 'rus'
+           await bot.sendMessage(chatId,"Выберите нужный пункт",adminFunctionRu)
+        }
         if (callbackData === "/members"){
-            console.log("users view")
+            if (language === "uzb"){
+                return console.log("userlarni ko'rish")
+            }
+            if(language === "rus") {
+                return console.log('Просмотр пользователей')
+            }
         }
     })
 }

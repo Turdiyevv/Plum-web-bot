@@ -3,7 +3,7 @@ module.exports = {
         reply_markup: {
             inline_keyboard: [
                 [
-                    {text: "Virtual karta", callback_data: 1},
+                    {text: "Virtual karta", callback_data: '/1'},
                     {text: "My ID", callback_data: 2}
                 ],
                 [
@@ -52,7 +52,7 @@ module.exports = {
                 ],
                 [
                     {text: "Ilovani o’rnatish", callback_data: 25},
-                    {text: "Ru", callback_data: 26}
+                    // {text: "Ru", callback_data: 26}
                 ],
             ]
         }
@@ -61,56 +61,56 @@ module.exports = {
         reply_markup: {
             inline_keyboard: [
                 [
-                    {text: "Virtual card", callback_data: 1},
+                    {text: "Виртуальная карта", callback_data: '/1'},
                     {text: "My ID", callback_data: 2}
                 ],
                 [
-                    {text: "Saved Payments", callback_data: 3},
-                    {text: "Customize the interface for yourself!", callback_data: 24}
+                    {text: "Сохраненные платежи ", callback_data: 3},
+                    {text: "Настраивайте интерфейс под себя!", callback_data: 24}
                 ],
                 [
-                    {text: "My payments", callback_data: 5},
-                    {text: "Quick Pay", callback_data: 6}
+                    {text: "Мои платежи", callback_data: 5},
+                    {text: "Q-Pay", callback_data: 6}
                 ],
                 [
-                    {text: "Security", callback_data: 7},
-                    {text: "Offline mode!", callback_data: 8}
+                    {text: "Безопасность", callback_data: 7},
+                    {text: "Оффлайн режим!", callback_data: 8}
                 ],
                 [
-                    {text: "SMS-notification", callback_data: 9},
-                    {text: "Payment history", callback_data: 10}
+                    {text: "Услуга SMS-информирование", callback_data: 9},
+                    {text: "История платежей ", callback_data: 10}
                 ],
                 [
-                    {text: "QR-scanner & Payment by location", callback_data: 11},
-                    {text: "Exchange Rates", callback_data: 12}
+                    {text: "QR-сканер и оплата на местах", callback_data: 11},
+                    {text: "Курс валют", callback_data: 12}
                 ],
                 [
-                    {text: "Tax services", callback_data: 13},
-                    {text: "Auto payment", callback_data: 14}
+                    {text: "Налоговые услуги", callback_data: 13},
+                    {text: "Автоплатеж", callback_data: 14}
                 ],
                 [
-                    {text: "Traffic police notifications", callback_data: 15},
-                    {text: "Fare payment", callback_data: 16}
+                    {text: "Уведомления ГУБДД", callback_data: 15},
+                    {text: "Оплата за проезд", callback_data: 16}
                 ],
                 [
-                    {text: "Payment", callback_data: 17},
-                    {text: "Request Funds", callback_data: 18}
+                    {text: "Оплата", callback_data: 17},
+                    {text: "Запрос средств", callback_data: 18}
                 ],
                 [
-                    {text: "Transfer funds by @username.", callback_data: 19},
-                    {text: "Transferring funds using a QR-code", callback_data: 20}
+                    {text: "Перевод средств с помощью @username", callback_data: 19},
+                    {text: "Перевод средств с помощью QR-кода", callback_data: 20}
                 ],
                 [
-                    {text: "Transfer founds", callback_data: 21},
-                    {text: "Access to the card", callback_data: 22}
+                    {text: "Перевод с карты на карту", callback_data: 21},
+                    {text: "Доступ к карте ", callback_data: 22}
                 ],
                 [
-                    {text: "Adding card", callback_data: 23},
+                    {text: "Добавление карты", callback_data: 23},
                     {text: "OTP", callback_data: 24}
                 ],
                 [
-                    {text: "Installing the app", callback_data: 25},
-                    {text: "Ru", callback_data: 26}
+                    {text: "Установка приложения", callback_data: 25},
+                    // {text: "Ru", callback_data: 26}
                 ],
             ]
         }
@@ -119,56 +119,56 @@ module.exports = {
         reply_markup: {
             inline_keyboard: [
                 [
-                    {text: "Virtual card", callback_data: 1},
-                    {text: "My ID", callback_data: 2}
+                    {text: "Virtual card", callback_data: '/1'},
+                    {text: "My ID", callback_data: '/2'}
                 ],
                 [
-                    {text: "Saved Payments", callback_data: 3},
-                    {text: "Customize the interface for yourself!", callback_data: 24}
+                    {text: "Saved Payments", callback_data: '/3'},
+                    {text: "Customize the interface for yourself!", callback_data: '/24'}
                 ],
                 [
-                    {text: "My payments", callback_data: 5},
-                    {text: "Quick Pay", callback_data: 6}
+                    {text: "My payments", callback_data: '/5'},
+                    {text: "Quick Pay", callback_data: '/6'}
                 ],
                 [
-                    {text: "Security", callback_data: 7},
-                    {text: "Offline mode!", callback_data: 8}
+                    {text: "Security", callback_data: '/7'},
+                    {text: "Offline mode!", callback_data: '/8'}
                 ],
                 [
-                    {text: "SMS-notification", callback_data: 9},
-                    {text: "Payment history", callback_data: 10}
+                    {text: "SMS-notification", callback_data: '/9'},
+                    {text: "Payment history", callback_data: '/10'}
                 ],
                 [
-                    {text: "QR-scanner & Payment by location", callback_data: 11},
-                    {text: "Exchange Rates", callback_data: 12}
+                    {text: "QR-scanner & Payment by location", callback_data: '/11'},
+                    {text: "Exchange Rates", callback_data: '/12'}
                 ],
                 [
-                    {text: "Tax services", callback_data: 13},
-                    {text: "Auto payment", callback_data: 14}
+                    {text: "Tax services", callback_data: '/13'},
+                    {text: "Auto payment", callback_data: '/14'}
                 ],
                 [
-                    {text: "Traffic police notifications", callback_data: 15},
-                    {text: "Fare payment", callback_data: 16}
+                    {text: "Traffic police notifications", callback_data: '/15'},
+                    {text: "Fare payment", callback_data: '/16'}
                 ],
                 [
-                    {text: "Payment", callback_data: 17},
-                    {text: "Request Funds", callback_data: 18}
+                    {text: "Payment", callback_data: '/17'},
+                    {text: "Request Funds", callback_data: '/18'}
                 ],
                 [
-                    {text: "Transfer funds by @username.", callback_data: 19},
-                    {text: "Transferring funds using a QR-code", callback_data: 20}
+                    {text: "Transfer funds by @username.", callback_data: '/19'},
+                    {text: "Transferring funds using a QR-code", callback_data: '/20'}
                 ],
                 [
-                    {text: "Transfer founds", callback_data: 21},
-                    {text: "Access to the card", callback_data: 22}
+                    {text: "Transfer founds", callback_data: '/21'},
+                    {text: "Access to the card", callback_data: '/22'}
                 ],
                 [
-                    {text: "Adding card", callback_data: 23},
-                    {text: "OTP", callback_data: 24}
+                    {text: "Adding card", callback_data: '/23'},
+                    {text: "OTP", callback_data: '/24'}
                 ],
                 [
-                    {text: "Installing the app", callback_data: 25},
-                    {text: "Ru", callback_data: 26}
+                    {text: "Installing the app", callback_data: '/25'},
+                    // {text: "Ru", callback_data: 26}
                 ],
             ]
         }

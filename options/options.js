@@ -116,7 +116,7 @@ module.exports = {
             inline_keyboard:[
                 [
                     {text: "O'zbekcha", callback_data: "/uzb"},
-                    {text: "Ruscha", callback_data: "/rus"}
+                    {text: "Русский язык", callback_data: "/rus"}
                 ]
             ]
         }
@@ -130,6 +130,18 @@ module.exports = {
                 ],
                 [
                     {text: "Umumiy xabar jo'natish", callback_data: "/send-m-users"}
+                ]
+            ]
+        }
+    },
+    adminFunctionRu:{
+        reply_markup:{
+            inline_keyboard:[
+                [
+                    {text: "Пользователи", callback_data: "/members"}
+                ],
+                [
+                    {text: "Отправить общее сообщение", callback_data: "/send-m-users"}
                 ]
             ]
         }
