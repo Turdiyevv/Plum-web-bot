@@ -4,55 +4,55 @@ module.exports = {
             inline_keyboard: [
                 [
                     {text: "Virtual karta", callback_data: '/1'},
-                    {text: "My ID", callback_data: 2}
+                    {text: "My ID", callback_data: '/2'}
                 ],
                 [
-                    {text: "Saqlangan to'lovlar", callback_data: 3},
-                    {text: "Interfeysini o‘zingiz uchun moslashtiring!", callback_data: 24}
+                    {text: "Saqlangan to'lovlar", callback_data: '/3'},
+                    {text: "Interfeysini o‘zingiz uchun moslashtiring!", callback_data: '/4'}
                 ],
                 [
-                    {text: "Mening to'lovlarim", callback_data: 5},
-                    {text: "Quick Pay", callback_data: 6}
+                    {text: "Mening to'lovlarim", callback_data: '/5'},
+                    {text: "Quick Pay", callback_data: '/6'}
                 ],
                 [
-                    {text: "Xavfsizlik", callback_data: 7},
-                    {text: "Offline rejim!", callback_data: 8}
+                    {text: "Xavfsizlik", callback_data: '/7'},
+                    {text: "Offline rejim!", callback_data: '/8'}
                 ],
                 [
-                    {text: "SMS-xabarnoma", callback_data: 9},
-                    {text: "To'lovlar tarix", callback_data: 10}
+                    {text: "SMS-xabarnoma", callback_data: '/9'},
+                    {text: "To'lovlar tarix", callback_data: '/10'}
                 ],
                 [
-                    {text: "QR-skaner va joylarda to'lov", callback_data: 11},
-                    {text: "Valyuta kursi", callback_data: 12}
+                    {text: "QR-skaner va joylarda to'lov", callback_data: '/11'},
+                    {text: "Valyuta kursi", callback_data: '/12'}
                 ],
                 [
-                    {text: "Soliq xizmatlari", callback_data: 13},
-                    {text: "Avto-to'lov", callback_data: 14}
+                    {text: "Soliq xizmatlari", callback_data: '/13'},
+                    {text: "Avto-to'lov", callback_data: '/14'}
                 ],
                 [
-                    {text: "DYHXX jarimalari", callback_data: 15},
-                    {text: "Yo'l haqqi uchun to'lov", callback_data: 16}
+                    {text: "DYHXX jarimalari", callback_data: '/15'},
+                    {text: "Yo'l haqqi uchun to'lov", callback_data: '/16'}
                 ],
                 [
-                    {text: "To‘lovlar", callback_data: 17},
-                    {text: "Mablag' so'rash", callback_data: 18}
+                    {text: "To‘lovlar", callback_data: '/17'},
+                    {text: "Mablag' so'rash", callback_data: '/18'}
                 ],
                 [
-                    {text: "Username orqali o'tkazma", callback_data: 19},
-                    {text: "QR-kod yordamida kartadan kartaga mablag' o'tkazish", callback_data: 20}
+                    {text: "Username orqali o'tkazma", callback_data: '/19'},
+                    {text: "QR-kod yordamida kartadan kartaga mablag' o'tkazish", callback_data: '/20'}
                 ],
                 [
-                    {text: "Kartadan kartaga o'tkazmalar", callback_data: 21},
-                    {text: "Kartadan foydalanuvchilar", callback_data: 22}
+                    {text: "Kartadan kartaga o'tkazmalar", callback_data: '/21'},
+                    {text: "Kartadan foydalanuvchilar", callback_data: '/22'}
                 ],
                 [
-                    {text: "Karta qo'shish", callback_data: 23},
-                    {text: "OTP (bir martalik parol)", callback_data: 24}
+                    {text: "Karta qo'shish", callback_data: '/23'},
+                    {text: "OTP (bir martalik parol)", callback_data: '/24'}
                 ],
                 [
-                    {text: "Ilovani o’rnatish", callback_data: 25},
-                    // {text: "Ru", callback_data: 26}
+                    {text: "Ilovani o’rnatish", callback_data: '/25'},
+                    // {text: "Ru", callback_data: '/26'}
                 ],
             ]
         }
@@ -62,54 +62,54 @@ module.exports = {
             inline_keyboard: [
                 [
                     {text: "Виртуальная карта", callback_data: '/1'},
-                    {text: "My ID", callback_data: 2}
+                    {text: "My ID", callback_data: '/2'}
                 ],
                 [
-                    {text: "Сохраненные платежи ", callback_data: 3},
-                    {text: "Настраивайте интерфейс под себя!", callback_data: 24}
+                    {text: "Сохраненные платежи ", callback_data: '/3'},
+                    {text: "Настраивайте интерфейс под себя!", callback_data: '/4'}
                 ],
                 [
-                    {text: "Мои платежи", callback_data: 5},
-                    {text: "Q-Pay", callback_data: 6}
+                    {text: "Мои платежи", callback_data: '/5'},
+                    {text: "Q-Pay", callback_data: '/6'}
                 ],
                 [
-                    {text: "Безопасность", callback_data: 7},
-                    {text: "Оффлайн режим!", callback_data: 8}
+                    {text: "Безопасность", callback_data: '/7'},
+                    {text: "Оффлайн режим!", callback_data: '/8'}
                 ],
                 [
-                    {text: "Услуга SMS-информирование", callback_data: 9},
-                    {text: "История платежей ", callback_data: 10}
+                    {text: "Услуга SMS-информирование", callback_data: '/9'},
+                    {text: "История платежей ", callback_data: '/10'}
                 ],
                 [
-                    {text: "QR-сканер и оплата на местах", callback_data: 11},
-                    {text: "Курс валют", callback_data: 12}
+                    {text: "QR-сканер и оплата на местах", callback_data: '/11'},
+                    {text: "Курс валют", callback_data: '/12'}
                 ],
                 [
-                    {text: "Налоговые услуги", callback_data: 13},
-                    {text: "Автоплатеж", callback_data: 14}
+                    {text: "Налоговые услуги", callback_data: '/13'},
+                    {text: "Автоплатеж", callback_data: '/14'}
                 ],
                 [
-                    {text: "Уведомления ГУБДД", callback_data: 15},
-                    {text: "Оплата за проезд", callback_data: 16}
+                    {text: "Уведомления ГУБДД", callback_data: '/15'},
+                    {text: "Оплата за проезд", callback_data: '/16'}
                 ],
                 [
-                    {text: "Оплата", callback_data: 17},
-                    {text: "Запрос средств", callback_data: 18}
+                    {text: "Оплата", callback_data: '/17'},
+                    {text: "Запрос средств", callback_data: '/18'}
                 ],
                 [
-                    {text: "Перевод средств с помощью @username", callback_data: 19},
-                    {text: "Перевод средств с помощью QR-кода", callback_data: 20}
+                    {text: "Перевод средств с помощью @username", callback_data: '/19'},
+                    {text: "Перевод средств с помощью QR-кода", callback_data: '/20'}
                 ],
                 [
-                    {text: "Перевод с карты на карту", callback_data: 21},
-                    {text: "Доступ к карте ", callback_data: 22}
+                    {text: "Перевод с карты на карту", callback_data: '/21'},
+                    {text: "Доступ к карте ", callback_data: '/22'}
                 ],
                 [
-                    {text: "Добавление карты", callback_data: 23},
-                    {text: "OTP", callback_data: 24}
+                    {text: "Добавление карты", callback_data: '/23'},
+                    {text: "OTP", callback_data: '/24'}
                 ],
                 [
-                    {text: "Установка приложения", callback_data: 25},
+                    {text: "Установка приложения", callback_data: '/25'},
                     // {text: "Ru", callback_data: 26}
                 ],
             ]
@@ -124,7 +124,7 @@ module.exports = {
                 ],
                 [
                     {text: "Saved Payments", callback_data: '/3'},
-                    {text: "Customize the interface for yourself!", callback_data: '/24'}
+                    {text: "Customize the interface for yourself!", callback_data: '/4'}
                 ],
                 [
                     {text: "My payments", callback_data: '/5'},

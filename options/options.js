@@ -126,9 +126,7 @@ module.exports = {
         reply_markup:{
             inline_keyboard:[
                 [
-                    {text: "Userlar", callback_data: "/members"}
-                ],
-                [
+                    {text: "Userlar", callback_data: "/members"},
                     {text: "Umumiy xabar jo'natish", callback_data: "/send-m-users"}
                 ]
             ]
@@ -138,9 +136,7 @@ module.exports = {
         reply_markup:{
             inline_keyboard:[
                 [
-                    {text: "Пользователи", callback_data: "/members"}
-                ],
-                [
+                    {text: "Пользователи", callback_data: "/members"},
                     {text: "Отправить общее сообщение", callback_data: "/send-m-users"}
                 ]
             ]
