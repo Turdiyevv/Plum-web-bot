@@ -13,7 +13,4 @@
 //         }
 //     })
 // }
-//
-// // const hintName = () => {
-// // }
 // module.exports = {hintFunction}

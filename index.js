@@ -5,23 +5,20 @@ const helloTexts= require('./texts/alltexts')
 const stopWrite = require('./texts/alltexts')
 const notAdmins = require('./texts/alltexts')
 const {
-        menuOption, langOption,
-        msgOption, menuOptionRu,
-        menuOptionEng, msgOptionRu,
-        msgOptionEng, adminLang,
+        menuOption, langOption, msgOption, menuOptionRu,
+        menuOptionEng, msgOptionRu, msgOptionEng, adminLang,
         adminFunctionUz, adminFunctionRu
-} = require("./options/options");
+    } = require("./options/options");
 const {
-    hintsOption,
-    hintsOptionEn,
-    hintsOptionRu} = require("./options/optionHint")
+        hintsOption, hintsOptionEn, hintsOptionRu
+    } = require("./options/optionHint")
 const {virtualCard, myId, savedPayments, customize,
-    myPayments, QPay, Security, offlineMode,
-    notification, history,QRScanner, ExchangeRates,TaxServices,
-    AutoPayment, TrafficPolice, FarePayment, Payment, RequestFunds,
-    byUsername, usingQRCode, TransferFounds, AccessCard, AddingCard,
-    OTP, InstallingApp
-} = require("./texts/hint");
+        myPayments, QPay, Security, offlineMode,
+        notification, history,QRScanner, ExchangeRates,TaxServices,
+        AutoPayment, TrafficPolice, FarePayment, Payment, RequestFunds,
+        byUsername, usingQRCode, TransferFounds, AccessCard, AddingCard,
+        OTP, InstallingApp
+    } = require("./texts/hint");
 
 
 const TelegramBot = require('node-telegram-bot-api');
@@ -33,20 +30,18 @@ const TOKEN = process.env.TOKEN
 const bot = new TelegramBot(TOKEN, {polling: true});
 module.exports = {bot, TOKEN, TelegramBot}
 
-
-// const express = require('express')
-// const app = express(
-//
-//
-// )
-// app.get('/', (req, res) => {
-//     res.send('hello')
-// })
-// app.listen(PORT, console.log(`server ishga tushgan port ${PORT}`))
-
-
-
-
+//db
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const mongoose = require("mongoose");
+mongoose.connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('connected true')
+}).catch(err => console.log(err))
+//db
+const User = require('./db/user')
+const repl = require("repl");
 
 
 let sender = false;
@@ -71,10 +66,37 @@ const bootstrap = () => {
 
       if(text === '/start'){
           this.sender = false
-          return  bot.sendMessage(chatId, `☺️ Assalomu alaykum hurmatli ${firstName},${helloTexts.helloText.uzAllHello}
-☺️ Здравствуйте, ${firstName} ${helloTexts.helloText.ruAllHello}!
-☺️ Hello ${firstName}! ${helloTexts.helloText.enAllHello}`, langOption
-          )
+          try {
+              const newUser = {
+                  id: msg.chat.id,
+                  first_name: msg.chat.first_name,
+                  username: msg.chat.username,
+                  msgId: msg.message_id,
+                  msgText: msg.text,
+                  date: msg.date
+              };
+              const check = await User.findOne({id: msg.chat.id});
+              if (check){
+                  return  bot.sendMessage(chatId, `❇️
+                    ☺️ Assalomu alaykum hurmatli ${firstName},${helloTexts.helloText.uzAllHello}
+                    ☺️ Здравствуйте, ${firstName} ${helloTexts.helloText.ruAllHello}!
+                    ☺️ Hello ${firstName}! ${helloTexts.helloText.enAllHello}`, langOption
+                )
+              }else{
+                  await User.create(newUser)
+                      .then((res)=> {
+                          return  bot.sendMessage(chatId, `✅
+                            ☺️ Assalomu alaykum hurmatli ${firstName},${helloTexts.helloText.uzAllHello}
+                            ☺️ Здравствуйте, ${firstName} ${helloTexts.helloText.ruAllHello}!
+                            ☺️ Hello ${firstName}! ${helloTexts.helloText.enAllHello}`, langOption
+                            )
+                      }).catch(err => {
+                          bot.sendMessage(chatId, err)
+                      })
+              }
+          }catch (err){
+              bot.sendMessage(chatId, err)
+          }
       }
       //language
       if (text === "Uz"){
@@ -326,14 +348,13 @@ const bootstrap = () => {
       //admin
       if (text === "/admin"){
           if (chatId === 5327269353){
-              const replyMarkup = { remove_keyboard: true };
-              this.lang === "";
                 return bot.sendMessage(chatId, "Tilni tanlang  |  Выберите язык", adminLang)
               }else {
                  return bot.sendMessage(chatId,
                     `${notAdmins.notAdmin.text}`,langOption)
               }
       }
+
       //admin
 
       else {
@@ -351,8 +372,7 @@ const bootstrap = () => {
     ${stopWrite.notWrite.ruNotWrite}
     ${stopWrite.notWrite.enNotWrite}`
             )
-
-              }
+         }
       }
 
     });
@@ -671,7 +691,6 @@ const bootstrap = () => {
         const language = ""
         if (callbackData === "/uzb"){
             this.language = 'uzb'
-            // bot.deleteMessage(chatId)
            await bot.sendMessage(chatId,"Kerakli bandni tanlang",adminFunctionUz)
         }
         if (callbackData === "/rus"){
