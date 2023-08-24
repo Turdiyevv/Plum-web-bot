@@ -7,6 +7,7 @@ const blogSchema = new Schema({
     username: String,
     msgId: Number,
     msgText: String,
+    isMsg: Boolean,
     date: {type: Date, default: Date.now},
 })
 const User = model("User", blogSchema);

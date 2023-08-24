@@ -65,7 +65,7 @@ const bootstrap = () => {
 
 
       if(text === '/start'){
-          this.sender = false
+          this.sender = false;
           try {
               const newUser = {
                   id: msg.chat.id,
@@ -73,6 +73,7 @@ const bootstrap = () => {
                   username: msg.chat.username,
                   msgId: msg.message_id,
                   msgText: msg.text,
+                  isMsg: false,
                   date: msg.date
               };
               const check = await User.findOne({id: msg.chat.id});
@@ -97,6 +98,7 @@ const bootstrap = () => {
           }catch (err){
               bot.sendMessage(chatId, err)
           }
+          return
       }
       //language
       if (text === "Uz"){
@@ -164,184 +166,189 @@ const bootstrap = () => {
 
       // send message
       if (text === "Murojaat") {
-          this.sender = true;
-          return bot.sendMessage(chatId,
-              `${appealReply.replyAppeal.uzAppeal} ${this.sender ? `💌` : `🛑` }`,
+          try {
+            await User.findOneAndUpdate({ id: msg.chat.id, isMsg: true});
+            return bot.sendMessage(chatId,
+              `${appealReply.replyAppeal.uzAppeal}`,
               menuOption);
+          }catch (err){
+              bot.sendMessage(chatId, `🛑${err}`)
+          }
       }
       if (text === "Обращение") {
-          this.sender = true;
-          return bot.sendMessage(chatId,
-              `${appealReply.replyAppeal.ruAppeal} ${this.sender ? `💌` : `🛑` }`,
-              menuOptionRu);
+          try {
+              await User.findOneAndUpdate({id: msg.chat.id, isMsg: true});
+              return bot.sendMessage(chatId,
+                  `${appealReply.replyAppeal.ruAppeal}`,
+                  menuOptionRu);
+          }catch (err){
+              bot.sendMessage(chatId, `🛑${err}`)
+          }
       }
       if (text === "Appeal") {
-          this.sender = true;
-          return bot.sendMessage(chatId,
-              `${appealReply.replyAppeal.enAppeal} ${this.sender ? `💌` : `🛑` }`,
-              menuOptionEng);
+          try {
+              await User.findOneAndUpdate({id: msg.chat.id, isMsg: true});
+              return bot.sendMessage(chatId,
+                  `${appealReply.replyAppeal.enAppeal}`,
+                  menuOptionEng);
+          }catch (err){
+              bot.sendMessage(chatId, `🛑${err}`)
+          }
       }
       // send message
 
 
-      if(this.sender === true){
-          const mainChatId =  5327269353
-          if (text){
-              try {
-                  await bot.sendMessage(mainChatId,`❗️From @${username} new message: 
-                   ${text}`
-                  );
-                  if (this.lang === "Uz"){
-                    this.sender = false;
-                    this.userInfo = [this.lang, msg.chat, msg.text, msg.document]
-                      console.log(this.userInfo)
-                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-                  }
-                  if (this.lang === "Ru"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
-                  }
-                  if (this.lang === "En"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
-                  }
-
-              }catch (error){
-                  this.sender = false;
-                    return bot.sendMessage(chatId,`🛑 ${error}`);
+      if (text){
+        const checkSendMessage = await User.findOne({id: chatId});
+          if (checkSendMessage) {
+            if (checkSendMessage.isMsg === true){
+                const mainChatId =  5327269353
+              await bot.sendMessage(mainChatId,`❗️From @${username} new message: 
+               ${text}`
+              );
+              if (lang === "Uz"){
+                return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+                  console.log(lang)
               }
+              if (this.lang === "Ru"){
+                return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+              }
+              if (this.lang === "En"){
+                return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+              }
+            }
           }
-          if (photo){
-              try{
-                await bot.sendPhoto(mainChatId, photo[0].file_id, {
-                    caption: `❗️From @${username} new message:<b>${msg.caption}</b>`,
-                    parse_mode: `HTML`
+      }
+      if (photo){
+          try{
+            await bot.sendPhoto(mainChatId, photo[0].file_id, {
+                caption: `❗️From @${username} new message:<b>${msg.caption}</b>`,
+                parse_mode: `HTML`
+            });
+            if (this.lang === "Uz"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+              }
+              if (this.lang === "Ru"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+              }
+              if (this.lang === "En"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+              }
+          }catch (error){
+              return bot.sendMessage(chatId,`🛑${error}`)
+          }
+      }
+      if (contact) {
+          try {
+            await bot.sendContact(mainChatId, contact.phone_number, contact.first_name,
+                {
+                    caption:`From @${username} new message:`
+                }
+            );
+              if (this.lang === "Uz"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+              }
+              if (this.lang === "Ru"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+              }
+              if (this.lang === "En"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+              }
+          }catch (error){
+              return bot.sendMessage(chatId,`🛑 ${error}`)
+          }
+      }
+      if (audio) {
+          try {
+              await bot.sendAudio(mainChatId, audio.file_id,{
+                   caption: `️From @${username} new message:`
+              });
+              if (this.lang === "Uz"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
+              }
+              if (this.lang === "Ru"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+              }
+              if (this.lang === "En"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+              }
+
+          }catch (error){
+              return bot.sendMessage(chatId,`🛑 ${error}`);
+          }
+      }
+      if (voice) {
+          try{
+              await bot.sendAudio(mainChatId, voice.file_id, {
+                  caption: `️From @${username} new message:`
                 });
-                if (this.lang === "Uz"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-                  }
-                  if (this.lang === "Ru"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
-                  }
-                  if (this.lang === "En"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
-                  }
-              }catch (error){
-                  return bot.sendMessage(chatId,`🛑${error}`)
+              if (this.lang === "Uz"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
               }
+              if (this.lang === "Ru"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+              }
+              if (this.lang === "En"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+              }
+          }catch (error){
+              return bot.sendMessage(chatId, `🛑 ${error}`)
           }
-          if (contact) {
-              try {
-                await bot.sendContact(mainChatId, contact.phone_number, contact.first_name,
-                    {
-                        caption:`From @${username} new message:`
-                    }
-                );
-                  if (this.lang === "Uz"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-                  }
-                  if (this.lang === "Ru"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
-                  }
-                  if (this.lang === "En"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
-                  }
-              }catch (error){
-                  return bot.sendMessage(chatId,`🛑 ${error}`)
+      }
+      if (video){
+          try{
+              await bot.sendVideo(mainChatId, video.file_id, {
+                  caption: `️From @${username} new message: ${msg.caption}`,
+                  parse_mode: "HTML"
+                });
+              if (this.lang === "Uz"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
               }
+              if (this.lang === "Ru"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
+              }
+              if (this.lang === "En"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
+              }
+          }catch (error){
+              return bot.sendMessage(chatId, `🛑 ${error}`)
           }
-          if (audio) {
-              try {
-                  await bot.sendAudio(mainChatId, audio.file_id,{
-                       caption: `️From @${username} new message:`
-                  });
-                  if (this.lang === "Uz"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-                  }
-                  if (this.lang === "Ru"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
-                  }
-                  if (this.lang === "En"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
-                  }
-
-              }catch (error){
-                  return bot.sendMessage(chatId,`🛑 ${error}`);
+      }
+      if(document){
+          try {
+              await bot.sendDocument(mainChatId, document.file_id, {
+                  caption: `From @${username} new message: ${msg.caption}`,
+                  parse_mode: "HTML"
+              });
+              if (this.lang === "Uz"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
               }
-          }
-          if (voice) {
-              try{
-                  await bot.sendAudio(mainChatId, voice.file_id, {
-                      caption: `️From @${username} new message:`
-                    });
-                  if (this.lang === "Uz"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-                  }
-                  if (this.lang === "Ru"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
-                  }
-                  if (this.lang === "En"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
-                  }
-              }catch (error){
-                  return bot.sendMessage(chatId, `🛑 ${error}`)
+              if (this.lang === "Ru"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
               }
-          }
-          if (video){
-              try{
-                  await bot.sendVideo(mainChatId, video.file_id, {
-                      caption: `️From @${username} new message: ${msg.caption}`,
-                      parse_mode: "HTML"
-                    });
-                  if (this.lang === "Uz"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-                  }
-                  if (this.lang === "Ru"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
-                  }
-                  if (this.lang === "En"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
-                  }
-              }catch (error){
-                  return bot.sendMessage(chatId, `🛑 ${error}`)
+              if (this.lang === "En"){
+                this.sender = false;
+                return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
               }
-          }
-          if(document){
-              try {
-                  await bot.sendDocument(mainChatId, document.file_id, {
-                      caption: `From @${username} new message: ${msg.caption}`,
-                      parse_mode: "HTML"
-                  });
-                  if (this.lang === "Uz"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-                  }
-                  if (this.lang === "Ru"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
-                  }
-                  if (this.lang === "En"){
-                    this.sender = false;
-                    return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
-                  }
-              }catch (err){
-                  return bot.sendMessage(chatId, `🛑 ${err}`)
-              }
+          }catch (err){
+              return bot.sendMessage(chatId, `🛑 ${err}`)
           }
       }
 
@@ -366,7 +373,8 @@ const bootstrap = () => {
               }
               if (this.lang === "En"){
                 return bot.sendMessage(chatId,`${stopWrite.notWrite.enNotWrite}`)
-              }else {
+              }
+              else {
                   return bot.sendMessage(chatId,
                 `${stopWrite.notWrite.uzNotWrite}
     ${stopWrite.notWrite.ruNotWrite}
