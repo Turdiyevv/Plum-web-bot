@@ -44,7 +44,6 @@ const User = require('./db/user')
 const repl = require("repl");
 
 
-let sender = false;
 let lang = "";
 const bootstrap = () => {
     bot.setMyCommands([
@@ -65,7 +64,6 @@ const bootstrap = () => {
 
 
       if(text === '/start'){
-          this.sender = false;
           try {
               const newUser = {
                   id: msg.chat.id,
@@ -126,38 +124,38 @@ const bootstrap = () => {
 
         // select
       if (text === "Orqaga"){
+          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
           this.lang = ""
-          this.sender = false;
           return bot.sendMessage(chatId, "Tilni tanlang",langOption);
       }
       if (text === "Назад"){
+          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
           this.lang = ""
-          this.sender = false;
           return bot.sendMessage(chatId, "Выберите язык",langOption);
       }
       if (text === "Back"){
+          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
           this.lang = ""
-          this.sender = false;
           return bot.sendMessage(chatId, "Choose a language",langOption);
       }
         // select
 
         // Hints
       if (text === "Qo’llanmalar"){
-          this.sender = false;
+          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.uzReply}`,
               hintsOption
               );
       }
       if (text === "Подсказки"){
-          this.sender = false;
+          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.ruReply}`,
               hintsOptionRu
               )}
       if (text === "Hints"){
-          this.sender = false;
+          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.enReply}`,
               hintsOptionEn
@@ -198,17 +196,15 @@ const bootstrap = () => {
       // send message
 
 
+      const mainChatId =  5327269353
       if (text){
-        const checkSendMessage = await User.findOne({id: chatId});
+        const checkSendMessage = await User.findOne({id: msg.chat.id});
           if (checkSendMessage) {
-            if (checkSendMessage.isMsg === true){
-                const mainChatId =  5327269353
-              await bot.sendMessage(mainChatId,`❗️From @${username} new message: 
-               ${text}`
-              );
-              if (lang === "Uz"){
+            if (checkSendMessage.isMsg === true && this.lang === "Uz"){
+              await bot.sendMessage(mainChatId,`❗️From @${username} new message:${text}`);
+              await User.findOneAndUpdate({id: msg.chat.id, isMsg: false});
+              if (this.lang === "Uz"){
                 return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
-                  console.log(lang)
               }
               if (this.lang === "Ru"){
                 return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
@@ -226,15 +222,12 @@ const bootstrap = () => {
                 parse_mode: `HTML`
             });
             if (this.lang === "Uz"){
-                this.sender = false;
                 return bot.sendMessage(chatId,`Xabar yetkazildi ✅`, msgOption);
               }
               if (this.lang === "Ru"){
-                this.sender = false;
                 return bot.sendMessage(chatId,`Сообщение доставлено ✅`, msgOptionRu);
               }
               if (this.lang === "En"){
-                this.sender = false;
                 return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
               }
           }catch (error){
@@ -390,7 +383,7 @@ const bootstrap = () => {
         const callbackData = query.data;
         const chatId = query.message.chat.id;
         if (callbackData === "/reply-msg"){
-          this.sender = true;
+           await User.findOneAndUpdate({id: chatId, isMsg: true});
           if (this.lang === "Uz"){
             return bot.sendMessage(chatId,
                 `🔹 Iltimos, xabarni bitta matnda yo'llashga harakat qiling. ${this.sender ? `💌` : `🛑` }`,
