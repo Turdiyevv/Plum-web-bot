@@ -74,8 +74,8 @@ const bootstrap = () => {
                   isMsg: false,
                   date: msg.date
               };
-              const check = await User.findOne({id: msg.chat.id});
-              if (check){
+              const existingUser = await User.findOne({id: msg.chat.id});
+              if (existingUser){
                   return  bot.sendMessage(chatId, `❇️
                     ☺️ Assalomu alaykum hurmatli ${firstName},${helloTexts.helloText.uzAllHello}
                     ☺️ Здравствуйте, ${firstName} ${helloTexts.helloText.ruAllHello}!
@@ -124,17 +124,17 @@ const bootstrap = () => {
 
         // select
       if (text === "Orqaga"){
-          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
+          await User.findOneAndUpdate({ id: msg.chat.id}, {isMsg: false});
           this.lang = ""
           return bot.sendMessage(chatId, "Tilni tanlang",langOption);
       }
       if (text === "Назад"){
-          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
+          await User.findOneAndUpdate({ id: msg.chat.id}, {isMsg: false});
           this.lang = ""
           return bot.sendMessage(chatId, "Выберите язык",langOption);
       }
       if (text === "Back"){
-          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
+          await User.findOneAndUpdate({ id: msg.chat.id}, {isMsg: false});
           this.lang = ""
           return bot.sendMessage(chatId, "Choose a language",langOption);
       }
@@ -142,20 +142,20 @@ const bootstrap = () => {
 
         // Hints
       if (text === "Qo’llanmalar"){
-          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
+          await User.findOneAndUpdate({ id: msg.chat.id}, {isMsg: false});
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.uzReply}`,
               hintsOption
               );
       }
       if (text === "Подсказки"){
-          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
+          await User.findOneAndUpdate({ id: msg.chat.id}, {isMsg: false});
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.ruReply}`,
               hintsOptionRu
               )}
       if (text === "Hints"){
-          await User.findOneAndUpdate({ id: msg.chat.id, isMsg: false});
+          await User.findOneAndUpdate({ id: msg.chat.id}, {isMsg: false});
           return bot.sendMessage(chatId,
               `${hintsReplyData.replyHints.enReply}`,
               hintsOptionEn
@@ -165,7 +165,8 @@ const bootstrap = () => {
       // send message
       if (text === "Murojaat") {
           try {
-            await User.findOneAndUpdate({ id: msg.chat.id, isMsg: true});
+          console.log(msg)
+            await User.findOneAndUpdate({ id: msg.chat.id}, {isMsg: true});
             return bot.sendMessage(chatId,
               `${appealReply.replyAppeal.uzAppeal}`,
               menuOption);
@@ -175,7 +176,7 @@ const bootstrap = () => {
       }
       if (text === "Обращение") {
           try {
-              await User.findOneAndUpdate({id: msg.chat.id, isMsg: true});
+              await User.findOneAndUpdate({id: msg.chat.id}, {isMsg: true});
               return bot.sendMessage(chatId,
                   `${appealReply.replyAppeal.ruAppeal}`,
                   menuOptionRu);
@@ -185,7 +186,7 @@ const bootstrap = () => {
       }
       if (text === "Appeal") {
           try {
-              await User.findOneAndUpdate({id: msg.chat.id, isMsg: true});
+              await User.findOneAndUpdate({id: msg.chat.id}, {isMsg: true});
               return bot.sendMessage(chatId,
                   `${appealReply.replyAppeal.enAppeal}`,
                   menuOptionEng);
@@ -198,9 +199,9 @@ const bootstrap = () => {
 
       const mainChatId =  5327269353
       if (text){
-        const checkSendMessage = await User.findOne({id: msg.chat.id});
-          if (checkSendMessage) {
-            if (checkSendMessage.isMsg === true && this.lang === "Uz"){
+        const checkSendMessage = await User.findOne({id: msg.chat.id}, {isMsg: true});
+          // if (checkSendMessage) {
+          //   if (checkSendMessage.isMsg === true && this.lang === "Uz"){
               await bot.sendMessage(mainChatId,`❗️From @${username} new message:${text}`);
               await User.findOneAndUpdate({id: msg.chat.id, isMsg: false});
               if (this.lang === "Uz"){
@@ -212,8 +213,8 @@ const bootstrap = () => {
               if (this.lang === "En"){
                 return bot.sendMessage(chatId,`Message delivered ✅`, msgOptionEng);
               }
-            }
-          }
+          //   }
+          // }
       }
       if (photo){
           try{
